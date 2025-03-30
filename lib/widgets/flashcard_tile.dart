@@ -20,7 +20,7 @@ class FlashcardTile extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
-      child: InkWell(
+      child: InkWell(        
         borderRadius: BorderRadius.circular(12),
         onTap: () {
           // Optional: Add tap functionality if needed

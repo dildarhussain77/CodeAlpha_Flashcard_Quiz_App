@@ -27,8 +27,8 @@ class HomeScreen extends StatelessWidget {
           children: [
             Expanded(
               child: ListView.builder(
-                itemCount: flashcardProvider.flashcards.length,
-                itemBuilder: (context, index) {
+                itemCount: flashcardProvider.flashcards.length,                
+                itemBuilder: (context, index) {                  
                   final flashcard = flashcardProvider.flashcards[index];
                   return FlashcardTile(flashcard: flashcard);
                 },
@@ -43,7 +43,8 @@ class HomeScreen extends StatelessWidget {
           children: [
             FloatingActionButton(
               heroTag: "start_quiz",
-              child: const Icon(Icons.play_arrow),
+              child: const Icon(Icons.play_arrow,color: Colors.white,),
+              backgroundColor: Colors.blueAccent,
               onPressed: () {
                 if (flashcardProvider.flashcards.isNotEmpty) {
                   Navigator.push(
@@ -60,7 +61,8 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 10), // Spacing between buttons
             FloatingActionButton(
               heroTag: "add_flashcard",
-              child: const Icon(Icons.add),
+              backgroundColor: Colors.blueAccent,
+              child: const Icon(Icons.add,color: Colors.white,),
               onPressed: () {
                 Navigator.push(
                   context,
