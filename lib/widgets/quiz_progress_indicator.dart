@@ -14,9 +14,9 @@ class QuizProgressIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text('$current'),
-        const Text(' / '),
-        Text('$total'),
+        Text('$current',style: TextStyle(color: Colors.white),),
+        const Text(' / ',style: TextStyle(color: Colors.white)),
+        Text('$total',style: TextStyle(color: Colors.white)),
       ],
     );
   }

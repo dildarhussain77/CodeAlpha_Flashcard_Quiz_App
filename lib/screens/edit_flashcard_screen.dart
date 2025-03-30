@@ -19,45 +19,56 @@ class EditFlashcardScreen extends StatelessWidget {
     final questionController = TextEditingController(text: currentQuestion);
     final answerController = TextEditingController(text: currentAnswer);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Edit Flashcard'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.save),
-            onPressed: () {
-              Provider.of<FlashcardProvider>(context, listen: false).updateFlashcard(
-                id,
-                questionController.text.trim(),
-                answerController.text.trim(),
-              );
-              Navigator.pop(context);
-            },
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Edit Flashcard',style: TextStyle(color: Colors.white)),
+          iconTheme: IconThemeData(
+              color: Colors.white
           ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: questionController,
-              decoration: const InputDecoration(
-                labelText: 'Question',
-                border: OutlineInputBorder(),
-              ),
-              maxLines: 3,
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: answerController,
-              decoration: const InputDecoration(
-                labelText: 'Answer',
-                border: OutlineInputBorder(),
-              ),
-              maxLines: 3,
+          backgroundColor: Colors.blueAccent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(25), bottomRight: Radius.circular(25))
+          ),
+          
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.save),
+              onPressed: () {
+                Provider.of<FlashcardProvider>(context, listen: false).updateFlashcard(
+                  id,
+                  questionController.text.trim(),
+                  answerController.text.trim(),
+                );
+                Navigator.pop(context);
+              },
             ),
           ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              TextField(
+                controller: questionController,
+                decoration: const InputDecoration(
+                  labelText: 'Question',
+                  border: OutlineInputBorder(),
+                ),
+                maxLines: 3,
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: answerController,
+                decoration: const InputDecoration(
+                  labelText: 'Answer',
+                  border: OutlineInputBorder(),
+                ),
+                maxLines: 3,
+              ),
+            ],
+          ),
         ),
       ),
     );

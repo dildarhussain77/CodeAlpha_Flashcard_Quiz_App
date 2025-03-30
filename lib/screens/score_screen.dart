@@ -24,72 +24,79 @@ class ScoreScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Quiz Results'),
-        automaticallyImplyLeading: false,
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                resultMessage,
-                style: theme.textTheme.headlineMedium?.copyWith(
-                  color: theme.colorScheme.primary,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Center(child: const Text('Quiz Results',style: TextStyle(color: Colors.white),)),
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.blueAccent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(25), bottomRight: Radius.circular(25))
+          ),
+        ),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  resultMessage,
+                  style: theme.textTheme.headlineMedium?.copyWith(
+                    color: theme.colorScheme.primary,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 32),
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  SizedBox(
-                    width: 200,
-                    height: 200,
-                    child: CircularProgressIndicator(
-                      value: percentage / 100,
-                      strokeWidth: 12,
-                      color: theme.colorScheme.primary,
-                      backgroundColor: theme.colorScheme.primary.withOpacity(0.2),
+                const SizedBox(height: 32),
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    SizedBox(
+                      width: 200,
+                      height: 200,
+                      child: CircularProgressIndicator(
+                        value: percentage / 100,
+                        strokeWidth: 12,
+                        color: theme.colorScheme.primary,
+                        backgroundColor: theme.colorScheme.primary.withOpacity(0.2),
+                      ),
                     ),
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        '$score / $total',
-                        style: theme.textTheme.headlineLarge,
-                      ),
-                      Text(
-                        '${percentage.toStringAsFixed(1)}%',
-                        style: theme.textTheme.titleLarge,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(height: 32),
-              ElevatedButton.icon(
-                icon: const Icon(Icons.home),
-                label: const Text('Back to Home'),
-                onPressed: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (_) => const HomeScreen()),
-                    (route) => false,
-                  );
-                },
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton.icon(
-                icon: const Icon(Icons.refresh),
-                label: const Text('Try Again'),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
+                    Column(
+                      children: [
+                        Text(
+                          '$score / $total',
+                          style: theme.textTheme.headlineLarge,
+                        ),
+                        Text(
+                          '${percentage.toStringAsFixed(1)}%',
+                          style: theme.textTheme.titleLarge,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 32),
+                ElevatedButton.icon(
+                  icon: const Icon(Icons.home),
+                  label: const Text('Back to Home'),
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (_) => const HomeScreen()),
+                      (route) => false,
+                    );
+                  },
+                ),
+                const SizedBox(height: 16),
+                ElevatedButton.icon(
+                  icon: const Icon(Icons.refresh),
+                  label: const Text('Try Again'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

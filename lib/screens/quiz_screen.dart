@@ -93,117 +93,130 @@ class _QuizScreenState extends State<QuizScreen> {
     final currentFlashcard = _quizFlashcards[_currentIndex];
     final theme = Theme.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: QuizProgressIndicator(
-          current: _currentIndex + 1,
-          total: _quizFlashcards.length,
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.close),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (ctx) => AlertDialog(
-                  title: const Text('Leave Quiz?'),
-                  content: const Text(
-                      'Your progress will not be saved if you leave now.'),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.of(ctx).pop(),
-                      child: const Text('Cancel'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(ctx).pop();
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text('Leave'),
-                    ),
-                  ],
-                ),
-              );
-            },
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,            
+            children: [              
+              QuizProgressIndicator(
+                current: _currentIndex + 1,
+                total: _quizFlashcards.length,          
+              ),
+            ],
           ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Card(
-              elevation: 4,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    Text(
-                      'Question',
-                      style: theme.textTheme.titleSmall?.copyWith(
-                        color: theme.colorScheme.primary,
+          backgroundColor: Colors.blueAccent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(25), bottomRight: Radius.circular(25))
+          ),
+          iconTheme: IconThemeData(color: Colors.white),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
+                    title: const Text('Leave Quiz?'),
+                    content: const Text(
+                        'Your progress will not be saved if you leave now.'),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(ctx).pop(),
+                        child: const Text('Cancel'),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      currentFlashcard.question,
-                      style: theme.textTheme.headlineSmall,
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
-            Text(
-              'Select the correct answer:',
-              style: theme.textTheme.titleMedium,
-            ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: ListView.separated(
-                itemCount: _options.length,
-                separatorBuilder: (_, __) => const SizedBox(height: 8),
-                itemBuilder: (context, index) {
-                  final option = _options[index];
-                  final isCorrect = option == currentFlashcard.answer;
-                  final isSelected = _selectedAnswer == option;
-
-                  Color? backgroundColor;
-                  Color? foregroundColor;
-
-                  if (_showAnswer) {
-                    if (isCorrect) {
-                      backgroundColor = Colors.green.shade100;
-                      foregroundColor = Colors.green.shade900;
-                    } else if (isSelected) {
-                      backgroundColor = Colors.red.shade100;
-                      foregroundColor = Colors.red.shade900;
-                    }
-                  }
-
-                  return ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: backgroundColor,
-                      foregroundColor: foregroundColor,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Leave'),
                       ),
-                    ),
-                    onPressed: _selectedAnswer == null
-                        ? () => _checkAnswer(option)
-                        : null,
-                    child: Text(
-                      option,
-                      style: theme.textTheme.bodyLarge,
-                    ),
-                  );
-                },
-              ),
+                    ],
+                  ),
+                );
+              },
             ),
           ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Card(
+                elevation: 4,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Question',
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          color: theme.colorScheme.primary,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        currentFlashcard.question,
+                        style: theme.textTheme.headlineSmall,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+              Text(
+                'Select the correct answer:',
+                style: theme.textTheme.titleMedium,
+              ),
+              const SizedBox(height: 16),
+              Expanded(
+                child: ListView.separated(
+                  itemCount: _options.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: 8),
+                  itemBuilder: (context, index) {
+                    final option = _options[index];
+                    final isCorrect = option == currentFlashcard.answer;
+                    final isSelected = _selectedAnswer == option;
+      
+                    Color? backgroundColor;
+                    Color? foregroundColor;
+      
+                    if (_showAnswer) {
+                      if (isCorrect) {
+                        backgroundColor = Colors.green.shade100;
+                        foregroundColor = Colors.green.shade900;
+                      } else if (isSelected) {
+                        backgroundColor = Colors.red.shade100;
+                        foregroundColor = Colors.red.shade900;
+                      }
+                    }
+      
+                    return ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: backgroundColor,
+                        foregroundColor: foregroundColor,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: _selectedAnswer == null
+                          ? () => _checkAnswer(option)
+                          : null,
+                      child: Text(
+                        option,
+                        style: theme.textTheme.bodyLarge,
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
